@@ -11,6 +11,7 @@
   :root {
     --bg-main: #07090c;
     --bg-card: #0f1318;
+    --bg-card-hover: #161b22;
     --border: #1e2530;
     --border-accent: #2d3748;
     --brand-orange: #ff4d00;
@@ -22,6 +23,7 @@
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background-color: var(--bg-main);
@@ -29,9 +31,24 @@
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
+
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .section { padding: 80px 0; position: relative; }
+  .section { padding: 96px 0; position: relative; }
+  .glow-bg {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-orange { background: var(--brand-orange); top: -100px; left: 50%; transform: translateX(-50%); }
+  .glow-green { background: var(--brand-green); bottom: 100px; right: -150px; }
+
   header {
     border-bottom: 1px solid var(--border);
     position: sticky;
@@ -40,100 +57,724 @@
     backdrop-filter: blur(16px);
     z-index: 100;
   }
-  .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
-  .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: #fff; text-decoration: none; }
-  .logo-badge { background: var(--brand-orange-soft); color: var(--brand-orange); border: 1px solid rgba(255, 77, 0, 0.3); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
-  .btn-primary { background: var(--brand-orange); color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 10px; display: inline-flex; align-items: center; border: none; cursor: pointer; }
-  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; padding-top: 20px; }
-  .tag { display: inline-flex; align-items: center; gap: 8px; background: var(--brand-orange-soft); border: 1px solid rgba(255, 77, 0, 0.25); color: var(--brand-orange); font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; }
-  h1 { font-family: var(--font-heading); font-size: 48px; line-height: 1.15; margin-bottom: 20px; font-weight: 800; }
-  .hero-p { font-size: 17px; color: var(--text-muted); margin-bottom: 32px; }
-  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 28px; }
-  .stat-num { font-family: var(--font-heading); font-size: 28px; font-weight: 700; color: #fff; }
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .logo-badge {
+    background: var(--brand-orange-soft);
+    color: var(--brand-orange);
+    border: 1px solid rgba(255, 77, 0, 0.3);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .nav-cta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .btn-secondary {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px;
+    transition: 0.2s;
+  }
+  .btn-secondary:hover { color: var(--brand-orange); }
+  .btn-primary {
+    background: var(--brand-orange);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(255, 77, 0, 0.35);
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 77, 0, 0.5);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding-top: 30px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--brand-orange-soft);
+    border: 1px solid rgba(255, 77, 0, 0.25);
+    color: var(--brand-orange);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-orange);
+    box-shadow: 0 0 10px var(--brand-orange);
+  }
+  h1 {
+    font-family: var(--font-heading);
+    font-size: 54px;
+    line-height: 1.12;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    font-weight: 800;
+  }
+  h1 span {
+    background: linear-gradient(90deg, #fff 30%, #8b949e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-p {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    max-width: 540px;
+    font-weight: 400;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+  .stat-num {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
   .stat-num span { color: var(--brand-orange); }
-  .stat-lbl { font-size: 12px; color: var(--text-muted); }
-  .hero-widget-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; }
-  .hw-bank-row { display: flex; justify-content: space-between; align-items: center; background: #0b0e13; border: 1px solid var(--border); padding: 10px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 8px; }
-  .hw-bank-row.success { border-color: rgba(0, 230, 118, 0.4); background: rgba(0, 230, 118, 0.05); }
-  .hw-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+  .stat-lbl { font-size: 13px; color: var(--text-muted); }
+
+  .hero-widget-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-widget-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-orange), var(--brand-green));
+  }
+  .hw-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hw-partner-brand {
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hw-partner-brand .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brand-green);
+    box-shadow: 0 0 10px var(--brand-green);
+  }
+  .hw-item {
+    background: #080a0d;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+  .hw-banks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .hw-bank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0b0e13;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  .hw-bank-row.success {
+    border-color: rgba(0, 230, 118, 0.4);
+    background: rgba(0, 230, 118, 0.05);
+  }
+  .hw-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
   .hw-badge.green { background: var(--brand-green-soft); color: var(--brand-green); }
   .hw-badge.red { background: rgba(255, 59, 48, 0.12); color: #ff3b30; }
-  .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .comp-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 32px; }
-  .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .product-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+
+  .section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 64px auto;
+  }
+  .section-header h2 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .section-header p {
+    font-size: 16px;
+    color: var(--text-muted);
+  }
+
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .comp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+  }
+  .comp-card.bad { border-color: rgba(255, 59, 48, 0.2); }
+  .comp-card.good {
+    border-color: rgba(0, 230, 118, 0.3);
+    background: linear-gradient(180deg, rgba(0, 230, 118, 0.03) 0%, var(--bg-card) 100%);
+  }
+  .comp-title {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .comp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .comp-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: #c9d1d9;
+  }
+  .comp-list .icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .feat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px 28px;
+    transition: 0.3s;
+  }
+  .feat-card:hover {
+    border-color: var(--brand-orange);
+    transform: translateY(-4px);
+    background: var(--bg-card-hover);
+  }
+  .feat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--brand-orange-soft);
+    color: var(--brand-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .feat-card h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .feat-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .product-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
   .product-box.pos { border-top: 4px solid var(--brand-orange); }
   .product-box.bnpl { border-top: 4px solid #3b82f6; }
-  .lead-wrapper { background: linear-gradient(180deg, #121720 0%, #0a0d12 100%); border: 1px solid var(--border-accent); border-radius: 24px; padding: 48px; }
-  .form-input { width: 100%; background: #080a0e; border: 1px solid var(--border); padding: 14px; border-radius: 10px; color: #fff; margin-bottom: 12px; }
-  footer { border-top: 1px solid var(--border); padding: 36px 0; font-size: 13px; color: var(--text-muted); }
-  @media (max-width: 800px) {
-    .hero-grid, .comparison-grid, .products-grid { grid-template-columns: 1fr; }
-    h1 { font-size: 34px; }
+  .prod-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+  .pos .prod-badge { background: var(--brand-orange-soft); color: var(--brand-orange); }
+  .bnpl .prod-badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+  .product-box h3 {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .product-box p {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  .prod-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .prod-bullets li {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e6edf3;
+  }
+  .prod-bullets li::before {
+    content: "✓";
+    font-weight: 800;
+    color: var(--brand-green);
+  }
+
+  .lead-wrapper {
+    background: linear-gradient(180deg, #121720 0%, #0a0d12 100%);
+    border: 1px solid var(--border-accent);
+    border-radius: 28px;
+    padding: 60px 48px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.7);
+  }
+  .lead-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .calc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .form-input {
+    background: #080a0e;
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+  }
+  .form-input:focus { border-color: var(--brand-orange); }
+  .calc-res-box {
+    background: #090c10;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .res-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+  }
+  .res-val {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--brand-green);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid, .comparison-grid, .features-grid, .products-grid, .lead-grid {
+      grid-template-columns: 1fr;
+    }
+    h1 { font-size: 38px; }
+    .hero-stats { grid-template-columns: 1fr; gap: 16px; }
+    .lead-wrapper { padding: 36px 24px; }
   }
 </style>
 </head>
 <body>
+
+<div class="glow-bg glow-orange"></div>
+<div class="glow-bg glow-green"></div>
+
 <header>
   <div class="container nav-inner">
-    <a href="#" class="logo"><span>ПОРУБЛЮ</span><span class="logo-badge">WHITE LABEL</span></a>
-    <a href="#connect" class="btn-primary">Подключить за 24ч</a>
+    <a href="#" class="logo">
+      <span>ПОРУБЛЮ</span>
+      <span class="logo-badge">WHITE LABEL</span>
+    </a>
+    <div class="nav-cta">
+      <a href="#how" class="btn-secondary">Как это работает</a>
+      <a href="#products" class="btn-secondary">POS & BNPL</a>
+      <a href="#connect" class="btn-primary">Подключить за 24ч</a>
+    </div>
   </div>
 </header>
+
 <section class="section">
   <div class="container hero-grid">
     <div>
       <div class="tag">Финтех-инфраструктура нового поколения</div>
       <h1>Рассрочки <span>под вашим брендом</span> с одобрением до 95%</h1>
-      <p class="hero-p">Каскадный кредитный брокер: 12+ банков-партнеров, POS и BNPL в единой кнопке без ухода клиента на чужие сайты.</p>
+      <p class="hero-p">
+        Каскадный кредитный брокер для сайтов, клиник, школ и магазинов. 12+ банков-партнеров, POS и BNPL в одной кнопке без ухода клиента на чужие сайты.
+      </p>
+      <div class="hero-actions">
+        <a href="#connect" class="btn-primary">Оставить заявку на интеграцию</a>
+        <a href="#demo" class="btn-secondary" style="border: 1px solid var(--border);">Смотреть демо</a>
+      </div>
       <div class="hero-stats">
-        <div><div class="stat-num"><span>12+</span></div><div class="stat-lbl">Банков в пуле</div></div>
-        <div><div class="stat-num">до <span>95%</span></div><div class="stat-lbl">Одобрение</div></div>
-        <div><div class="stat-num"><span>1 мин</span></div><div class="stat-lbl">На анкету</div></div>
+        <div>
+          <div class="stat-num"><span>12+</span></div>
+          <div class="stat-lbl">Банков в едином пуле</div>
+        </div>
+        <div>
+          <div class="stat-num">до <span>95%</span></div>
+          <div class="stat-lbl">Конверсия в одобрение</div>
+        </div>
+        <div>
+          <div class="stat-num"><span>1 мин</span></div>
+          <div class="stat-lbl">На заполнение анкеты</div>
+        </div>
       </div>
     </div>
-    <div class="hero-widget-card">
-      <div style="font-size: 13px; font-weight: 700; margin-bottom: 14px;">Живой каскадный скоринг</div>
-      <div class="hw-bank-row"><span>Сбербанк</span><span class="hw-badge red">Отказ</span></div>
-      <div class="hw-bank-row success"><span>Т-Банк (Автоперехват)</span><span class="hw-badge green">✓ Одобрено</span></div>
-      <div class="hw-bank-row success"><span>Альфа-Банк</span><span class="hw-badge green">✓ Одобрено</span></div>
-      <div class="hw-bank-row success"><span>МТС Банк</span><span class="hw-badge green">✓ Одобрено</span></div>
-      <div style="margin-top: 14px; font-size: 12px; color: var(--brand-green); text-align: center;">⚡ Сделка заключена по SMS за 25 секунд</div>
+
+    <div class="hero-widget-card" id="demo">
+      <div class="hw-top">
+        <div class="hw-partner-brand">
+          <span class="dot"></span>
+          <span>Виджет на вашем сайте</span>
+        </div>
+        <span style="font-size: 11px; color: var(--text-muted);">Каскадный скоринг</span>
+      </div>
+
+      <div class="hw-item">
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Сумма рассрочки</div>
+        <div style="font-size: 22px; font-weight: 800; font-family: var(--font-heading);">150 000 ₽</div>
+        <div style="font-size: 12px; color: var(--brand-green); margin-top: 4px;">0% первый взнос • 12 месяцев</div>
+      </div>
+
+      <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);">
+        Опрос банков в реальном времени:
+      </div>
+
+      <div class="hw-banks-list">
+        <div class="hw-bank-row">
+          <span>Сбербанк</span>
+          <span class="hw-badge red">Отказ скоринга</span>
+        </div>
+        <div class="hw-bank-row success">
+          <span>Т-Банк (Автоперехват)</span>
+          <span class="hw-badge green">✓ Одобрено</span>
+        </div>
+        <div class="hw-bank-row success">
+          <span>Альфа-Банк</span>
+          <span class="hw-badge green">✓ Одобрено</span>
+        </div>
+        <div class="hw-bank-row success">
+          <span>МТС Банк</span>
+          <span class="hw-badge green">✓ Одобрено</span>
+        </div>
+      </div>
+
+      <div style="background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.25); border-radius: 10px; padding: 12px; font-size: 12px; color: var(--brand-green); text-align: center;">
+        ⚡ Клиент не потерян: сделка заключена по SMS за 25 секунд
+      </div>
     </div>
   </div>
 </section>
-<section class="section" style="background:#090c10;">
+
+<section class="section" style="background: #090c10; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
+    <div class="section-header">
+      <h2>Почему один банк — это потерянная прибыль</h2>
+      <p>Ограничиваясь одним банком-эквайером, вы дарите своих клиентов конкурентам.</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="comp-card bad">
+        <div class="comp-title" style="color: #ff5252;">
+          <span>❌</span> Классическая интеграция одного банка
+        </div>
+        <ul class="comp-list">
+          <li><span class="icon">🔻</span> <strong>До 45% отказов:</strong> банк отклонил заявку — клиент закрыл сайт и ушел.</li>
+          <li><span class="icon">🔻</span> <strong>Чужой брендинг:</strong> редирект на сторонние домены пугает покупателей.</li>
+          <li><span class="icon">🔻</span> <strong>Тяжелая анкета:</strong> сканы паспортов, 5 страниц форм и потеря терпения.</li>
+          <li><span class="icon">🔻</span> <strong>Сложный учет:</strong> разрозненные выгрузки и ручной контроль оплат.</li>
+        </ul>
+      </div>
+
+      <div class="comp-card good">
+        <div class="comp-title" style="color: var(--brand-green);">
+          <span>🚀</span> Платформа «ПОРУБЛЮ»
+        </div>
+        <ul class="comp-list">
+          <li><span class="icon">✅</span> <strong>Каскад из 12+ банков:</strong> если один отказал, заявку мгновенно забирает следующий.</li>
+          <li><span class="icon">✅</span> <strong>100% White Label:</strong> ваши цвета, ваш логотип, ваш субдомен без чужой рекламы.</li>
+          <li><span class="icon">✅</span> <strong>1 минута на всё:</strong> только телефон и ФИО, подписание в 1 клик по СМС.</li>
+          <li><span class="icon">✅</span> <strong>CRM & Telegram:</strong> мгновенные уведомления о статусах и бесшовный API.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="container">
+    <div class="section-header">
+      <h2>Не только банки: продукты платформы</h2>
+      <p>Закройте любые сценарии оплаты: от покупки онлайн в 4 клика до оформления в офлайн-точке.</p>
+    </div>
     <div class="products-grid">
       <div class="product-box pos">
-        <h3 style="font-size:24px; margin-bottom:8px;">ПОРУБЛЮ POS</h3>
-        <p style="color:var(--text-muted); font-size:14px;">Для офлайн-точек, клиник и шоурумов по QR-коду со смартфона покупателя.</p>
+        <span class="prod-badge">Офлайн & Ритейл</span>
+        <h3>ПОРУБЛЮ POS</h3>
+        <p>Моментальное оформление рассрочек на кассе, в шоуруме, клинике или офисе продаж через QR-код или планшет консультанта.</p>
+        <ul class="prod-bullets">
+          <li>Генерация персонального QR-кода на оплату за 3 секунды</li>
+          <li>Покупатель заполняет данные со своего смартфона</li>
+          <li>Идеально для чеков от 20 000 до 500 000 ₽</li>
+          <li>Подтверждение для менеджера прямо в Telegram</li>
+        </ul>
       </div>
+
       <div class="product-box bnpl">
-        <h3 style="font-size:24px; margin-bottom:8px;">ПОРУБЛЮ BNPL</h3>
-        <p style="color:var(--text-muted); font-size:14px;">Оплата долями 4×25% без кредитных договоров с выплатой 100% чека мерчанту.</p>
+        <span class="prod-badge">E-Commerce & Онлайн</span>
+        <h3>ПОРУБЛЮ BNPL</h3>
+        <p>Оплата частями: делите чек на 4 платежа без кредитных договоров и переплат. Максимальная конверсия для импульсивных покупок.</p>
+        <ul class="prod-bullets">
+          <li>Первый платеж 25% — остальное каждые 2 недели</li>
+          <li>Никаких кредитных историй и справок о доходах</li>
+          <li>Мерчант получает 100% суммы сразу на расчетный счет</li>
+          <li>Встраиваемый компактный виджет в корзину</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
+
+<section class="section" id="how" style="background: #090c10; border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <h2>Технологии для вашего бизнеса</h2>
+      <p>Спроектировано для легкого старта и глубокой интеграции с вашей CRM-системой.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">⚡</div>
+        <h3>Умный скоринг</h3>
+        <p>Собственный ML-алгоритм ранжирует банки по вероятности одобрения конкретного чека, максимизируя итоговый аппрув.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎨</div>
+        <h3>Полный White Label</h3>
+        <p>Индивидуальная стилизация: настраивайте шрифты, радиусы кнопок и цвета виджета прямо под дизайн-систему вашего бренда.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📲</div>
+        <h3>Telegram-бот & Push</h3>
+        <p>Команда и менеджеры видят движение по каждой заявке в реальном времени: «Заполнено», «Одобрено», «Выдано».</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔒</div>
+        <h3>152-ФЗ и безопасность</h3>
+        <p>Полное соответствие закону о персональных данных. Шифрование банковского уровня и защищенные каналы связи.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔄</div>
+        <h3>Готовые интеграции</h3>
+        <p>Быстрый запуск для платформ Chatium, 1С, Битрикс24, amoCRM или прямая интеграция по REST API и Webhooks.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📈</div>
+        <h3>Аналитический дашборд</h3>
+        <p>Прозрачные отчеты по конверсиям, среднему чеку, проценту одобрения каждым банком и комиссиям в едином окне.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="connect">
   <div class="container">
     <div class="lead-wrapper">
-      <h2 style="font-size:32px; margin-bottom:16px;">Подключите брокера рассрочек за 24 часа</h2>
-      <p style="color:var(--text-muted); margin-bottom:24px;">Оставьте контакты для получения демо-доступа к личному кабинету и песочнице API.</p>
-      <form style="max-width:480px;" onsubmit="event.preventDefault(); alert('Заявка принята!');">
-        <input type="text" class="form-input" placeholder="Ваше имя" required>
-        <input type="tel" class="form-input" placeholder="+7 (999) 000-00-00" required>
-        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Получить демо-доступ</button>
-      </form>
+      <div class="lead-grid">
+        <div>
+          <div class="tag">Быстрый старт</div>
+          <h2 style="font-family: var(--font-heading); font-size: 38px; line-height: 1.2; margin-bottom: 20px;">
+            Подключите брокера рассрочек за 24 часа
+          </h2>
+          <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 28px;">
+            Оставьте заявку — наш инженер предоставит демо-доступ к личному кабинету, песочнице API и настроит тестовый виджет под цвета вашей компании.
+          </p>
+          <div class="calc-res-box">
+            <div class="res-row">
+              <span style="color: var(--text-muted);">Скорость интеграции:</span>
+              <span class="res-val">от 1 рабочего дня</span>
+            </div>
+            <div class="res-row">
+              <span style="color: var(--text-muted);">Банков в пуле:</span>
+              <span class="res-val">12 ведущих банков РФ</span>
+            </div>
+            <div class="res-row">
+              <span style="color: var(--text-muted);">Формат интеграции:</span>
+              <span class="res-val" style="color: #fff;">SDK / iFrame / API / Chatium</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="calc-form" onsubmit="event.preventDefault(); alert('Спасибо! Заявка принята.');">
+          <div class="form-group">
+            <label>Ваше имя</label>
+            <input type="text" class="form-input" placeholder="Дмитрий" required>
+          </div>
+          <div class="form-group">
+            <label>Телефон для связи</label>
+            <input type="tel" class="form-input" placeholder="+7 (999) 000-00-00" required>
+          </div>
+          <div class="form-group">
+            <label>Сайт или сфера бизнеса</label>
+            <input type="text" class="form-input" placeholder="Онлайн-школа / Медицина / E-com" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 18px; font-size: 16px; margin-top: 10px;">
+            Получить демо-доступ и тарифы
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </section>
+
 <footer>
-  <div class="container" style="display:flex; justify-content:space-between;">
-    <span>ПОРУБЛЮ © 2026. Финтех-платформа рассрочек</span>
-    <span>White Label • POS & BNPL</span>
+  <div class="container footer-inner">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span style="font-family: var(--font-heading); font-weight: 800; color: #fff;">ПОРУБЛЮ</span>
+      <span>© 2026. Финтех-платформа кредитования и рассрочек</span>
+    </div>
+    <div>
+      <span>White Label Infrastructure • POS & BNPL Solutions</span>
+    </div>
   </div>
 </footer>
+
 </body>
 </html>
