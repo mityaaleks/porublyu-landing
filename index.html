@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПОРУБЛЮ — Кредитный брокер и рассрочки под вашим брендом</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #07090c;
+    --bg-card: #0f1318;
+    --border: #1e2530;
+    --border-accent: #2d3748;
+    --brand-orange: #ff4d00;
+    --brand-orange-soft: rgba(255, 77, 0, 0.12);
+    --brand-green: #00e676;
+    --brand-green-soft: rgba(0, 230, 118, 0.12);
+    --text-primary: #f0f3f6;
+    --text-muted: #8b949e;
+    --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 80px 0; position: relative; }
+  header {
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(7, 9, 12, 0.85);
+    backdrop-filter: blur(16px);
+    z-index: 100;
+  }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: #fff; text-decoration: none; }
+  .logo-badge { background: var(--brand-orange-soft); color: var(--brand-orange); border: 1px solid rgba(255, 77, 0, 0.3); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+  .btn-primary { background: var(--brand-orange); color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 10px; display: inline-flex; align-items: center; border: none; cursor: pointer; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; padding-top: 20px; }
+  .tag { display: inline-flex; align-items: center; gap: 8px; background: var(--brand-orange-soft); border: 1px solid rgba(255, 77, 0, 0.25); color: var(--brand-orange); font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; }
+  h1 { font-family: var(--font-heading); font-size: 48px; line-height: 1.15; margin-bottom: 20px; font-weight: 800; }
+  .hero-p { font-size: 17px; color: var(--text-muted); margin-bottom: 32px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 28px; }
+  .stat-num { font-family: var(--font-heading); font-size: 28px; font-weight: 700; color: #fff; }
+  .stat-num span { color: var(--brand-orange); }
+  .stat-lbl { font-size: 12px; color: var(--text-muted); }
+  .hero-widget-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; }
+  .hw-bank-row { display: flex; justify-content: space-between; align-items: center; background: #0b0e13; border: 1px solid var(--border); padding: 10px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 8px; }
+  .hw-bank-row.success { border-color: rgba(0, 230, 118, 0.4); background: rgba(0, 230, 118, 0.05); }
+  .hw-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+  .hw-badge.green { background: var(--brand-green-soft); color: var(--brand-green); }
+  .hw-badge.red { background: rgba(255, 59, 48, 0.12); color: #ff3b30; }
+  .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .comp-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 32px; }
+  .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .product-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+  .product-box.pos { border-top: 4px solid var(--brand-orange); }
+  .product-box.bnpl { border-top: 4px solid #3b82f6; }
+  .lead-wrapper { background: linear-gradient(180deg, #121720 0%, #0a0d12 100%); border: 1px solid var(--border-accent); border-radius: 24px; padding: 48px; }
+  .form-input { width: 100%; background: #080a0e; border: 1px solid var(--border); padding: 14px; border-radius: 10px; color: #fff; margin-bottom: 12px; }
+  footer { border-top: 1px solid var(--border); padding: 36px 0; font-size: 13px; color: var(--text-muted); }
+  @media (max-width: 800px) {
+    .hero-grid, .comparison-grid, .products-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav-inner">
+    <a href="#" class="logo"><span>ПОРУБЛЮ</span><span class="logo-badge">WHITE LABEL</span></a>
+    <a href="#connect" class="btn-primary">Подключить за 24ч</a>
+  </div>
+</header>
+<section class="section">
+  <div class="container hero-grid">
+    <div>
+      <div class="tag">Финтех-инфраструктура нового поколения</div>
+      <h1>Рассрочки <span>под вашим брендом</span> с одобрением до 95%</h1>
+      <p class="hero-p">Каскадный кредитный брокер: 12+ банков-партнеров, POS и BNPL в единой кнопке без ухода клиента на чужие сайты.</p>
+      <div class="hero-stats">
+        <div><div class="stat-num"><span>12+</span></div><div class="stat-lbl">Банков в пуле</div></div>
+        <div><div class="stat-num">до <span>95%</span></div><div class="stat-lbl">Одобрение</div></div>
+        <div><div class="stat-num"><span>1 мин</span></div><div class="stat-lbl">На анкету</div></div>
+      </div>
+    </div>
+    <div class="hero-widget-card">
+      <div style="font-size: 13px; font-weight: 700; margin-bottom: 14px;">Живой каскадный скоринг</div>
+      <div class="hw-bank-row"><span>Сбербанк</span><span class="hw-badge red">Отказ</span></div>
+      <div class="hw-bank-row success"><span>Т-Банк (Автоперехват)</span><span class="hw-badge green">✓ Одобрено</span></div>
+      <div class="hw-bank-row success"><span>Альфа-Банк</span><span class="hw-badge green">✓ Одобрено</span></div>
+      <div class="hw-bank-row success"><span>МТС Банк</span><span class="hw-badge green">✓ Одобрено</span></div>
+      <div style="margin-top: 14px; font-size: 12px; color: var(--brand-green); text-align: center;">⚡ Сделка заключена по SMS за 25 секунд</div>
+    </div>
+  </div>
+</section>
+<section class="section" style="background:#090c10;">
+  <div class="container">
+    <div class="products-grid">
+      <div class="product-box pos">
+        <h3 style="font-size:24px; margin-bottom:8px;">ПОРУБЛЮ POS</h3>
+        <p style="color:var(--text-muted); font-size:14px;">Для офлайн-точек, клиник и шоурумов по QR-коду со смартфона покупателя.</p>
+      </div>
+      <div class="product-box bnpl">
+        <h3 style="font-size:24px; margin-bottom:8px;">ПОРУБЛЮ BNPL</h3>
+        <p style="color:var(--text-muted); font-size:14px;">Оплата долями 4×25% без кредитных договоров с выплатой 100% чека мерчанту.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="connect">
+  <div class="container">
+    <div class="lead-wrapper">
+      <h2 style="font-size:32px; margin-bottom:16px;">Подключите брокера рассрочек за 24 часа</h2>
+      <p style="color:var(--text-muted); margin-bottom:24px;">Оставьте контакты для получения демо-доступа к личному кабинету и песочнице API.</p>
+      <form style="max-width:480px;" onsubmit="event.preventDefault(); alert('Заявка принята!');">
+        <input type="text" class="form-input" placeholder="Ваше имя" required>
+        <input type="tel" class="form-input" placeholder="+7 (999) 000-00-00" required>
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Получить демо-доступ</button>
+      </form>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="container" style="display:flex; justify-content:space-between;">
+    <span>ПОРУБЛЮ © 2026. Финтех-платформа рассрочек</span>
+    <span>White Label • POS & BNPL</span>
+  </div>
+</footer>
+</body>
+</html>
